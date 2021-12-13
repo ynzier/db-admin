@@ -27,6 +27,7 @@
     "react": "^17.0.0",
     "react-datetime": "^3.0.4",
     "react-dom": "^17.0.0",
+    "react-number-format": "^4.7.3",
     "react-preloader-icon": "^1.0.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.3.1",

@@ -66,7 +66,7 @@ const App = () => {
                         autoFocus
                         required
                         type="email"
-                        placeholder="example@klhealthcare.net"
+                        placeholder="example@kmutnb.com"
                         onChange={e => setUsername(e.target.value)}
                       />
                     </InputGroup>

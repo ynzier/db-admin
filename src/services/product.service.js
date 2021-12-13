@@ -36,6 +36,22 @@ const getProductType = () => {
     },
   });
 };
+const addProductType = data => {
+  return http.post('/product/addProductType', data, {
+    headers: {
+      'Content-type': 'application/json',
+      'x-access-token': user.accessToken,
+    },
+  });
+};
+const deleteProductType = id => {
+  return http.delete('/product/deleteProductType/' + id, {
+    headers: {
+      'Content-type': 'application/json',
+      'x-access-token': user.accessToken,
+    },
+  });
+};
 const addBrand = data => {
   return http.post('/product/addBrand', data, {
     headers: {
@@ -53,7 +69,7 @@ const getBrand = () => {
   });
 };
 const deleteBrand = id => {
-  return http.get('/product/deleteBrand/' + id, {
+  return http.delete('/product/deleteBrand/' + id, {
     headers: {
       'Content-type': 'application/json',
       'x-access-token': user.accessToken,
@@ -84,4 +100,6 @@ export default {
   deleteBrand,
   getOne,
   update,
+  addProductType,
+  deleteProductType,
 };

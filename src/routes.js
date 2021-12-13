@@ -12,8 +12,5 @@ export const Routes = {
   AllCustomer: { path: '/dashboard/allItem' },
   AddItem: { path: '/dashboard/additem' },
   Setting: { path: '/dashboard/setting' },
-  Record: { path: '/record/:id' },
-  ToPDF: { path: '/print/:id' },
-  Tickets: { path: '/dashboard/tickets' },
-  TicketID: { path: '/ticket/:id' },
+  TransactionList: { path: '/dashboard/transactions' },
 };

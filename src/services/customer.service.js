@@ -17,5 +17,28 @@ const removeCustomer = id => {
     },
   });
 };
+const getTransaction = id => {
+  return http.get('/getTransaction/' + id, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
+const getAllReceipts = () => {
+  return http.get(`/getAllReceipts`, {
+    headers: {
+      'Content-type': 'application/json',
+    },
+  });
+};
+const updateReceipt = (id, data) => {
+  return http.put(`/receipt/update/${id}/${data}`);
+};
 // eslint-disable-next-line
-export default { getAllCustomer, removeCustomer };
+export default {
+  getAllCustomer,
+  removeCustomer,
+  getTransaction,
+  getAllReceipts,
+  updateReceipt,
+};

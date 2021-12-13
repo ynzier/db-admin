@@ -7,14 +7,31 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Form, InputGroup, Button } from '@themesberg/react-bootstrap';
 
 export const SettingForm = props => {
-  const [brandData, setBrandData] = useState(props.data);
+  const [brandData, setBrandData] = useState();
+  const [typeData, setTypeData] = useState();
   const [input, setInput] = useState();
+  const [type, setType] = useState();
   useEffect(() => {
     let mounted = true;
     ProductService.getBrand()
       .then(res => {
         if (mounted) {
           setBrandData(res.data);
+        }
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
+    ProductService.getProductType()
+      .then(res => {
+        if (mounted) {
+          setTypeData(res.data);
         }
       })
       .catch(error => {
@@ -33,6 +50,20 @@ export const SettingForm = props => {
     ProductService.getBrand()
       .then(res => {
         setBrandData(res.data);
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
+
+    ProductService.getProductType()
+      .then(res => {
+        setTypeData(res.data);
       })
       .catch(error => {
         const resMessage =
@@ -62,8 +93,41 @@ export const SettingForm = props => {
         alert(resMessage);
       });
   };
-  const deleteRecord = id => {
-    ProductService.remove(id)
+  const deleteBrand = id => {
+    ProductService.deleteBrand(id)
+      .then(response => {
+        refreshList();
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
+  };
+  const deleteProductType = id => {
+    ProductService.deleteProductType(id)
+      .then(response => {
+        refreshList();
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
+  };
+  const sendTypeData = () => {
+    var data = {
+      category: type,
+    };
+    ProductService.addProductType(data)
       .then(response => {
         refreshList();
       })
@@ -96,7 +160,34 @@ export const SettingForm = props => {
           <div>
             <span
               onClick={() => {
-                deleteRecord(id);
+                deleteBrand(id);
+              }}>
+              <i className="fas fa-trash action"></i>
+            </span>
+          </div>
+        );
+      },
+    },
+  ];
+  const typeHeader = [
+    {
+      title: 'ชนิดสินค้า',
+      dataIndex: 'category',
+      key: 'category',
+      align: 'center',
+    },
+    {
+      title: 'Action',
+      key: 'key',
+      dataIndex: 'key',
+      render: (text, record) => {
+        const id = record.prod_type;
+
+        return (
+          <div>
+            <span
+              onClick={() => {
+                deleteProductType(id);
               }}>
               <i className="fas fa-trash action"></i>
             </span>
@@ -125,6 +216,25 @@ export const SettingForm = props => {
         dataSource={brandData ? brandData : null}
         columns={header}
         rowkey="id"
+      />
+      <div className="border-bottom border-light d-flex justify-content-between">
+        <h5 className="mb-0">เพิ่ม / ลบ ชนิดสินค้า</h5>
+        <InputGroup className="mb-md-0" style={{ width: '30%' }}>
+          <InputGroup.Text>
+            <FontAwesomeIcon icon={faPlus} />
+          </InputGroup.Text>
+          <Form.Control
+            type="text"
+            placeholder="ชนิดสินค้า"
+            onChange={e => setType(e.target.value)}
+          />
+          <Button onClick={sendTypeData}>เพิ่ม</Button>
+        </InputGroup>
+      </div>
+      <Table
+        dataSource={typeData ? typeData : null}
+        columns={typeHeader}
+        rowkey="prod_type"
       />
     </>
   );

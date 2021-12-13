@@ -19,6 +19,8 @@ const App = props => {
   const [filterData, setfilterData] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [openID, setOpenID] = useState();
+
+  const [typeData, setTypeData] = useState([]);
   const search = value => {
     const filterTable = record.filter(o =>
       Object.keys(o).some(k =>
@@ -26,6 +28,11 @@ const App = props => {
       ),
     );
 
+    setfilterData(filterTable);
+  };
+  const getFilter = value => {
+    // eslint-disable-next-line eqeqeq
+    var filterTable = record.filter(record => record.prod_type == value);
     setfilterData(filterTable);
   };
 
@@ -55,6 +62,23 @@ const App = props => {
       .catch(e => {
         console.log(e);
       });
+    ProductService.getProductType()
+      .then(res => {
+        if (mounted) {
+          var getData;
+          getData = res.data;
+          setTypeData(getData);
+        }
+      })
+      .catch(error => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        alert(resMessage);
+      });
     return () => (mounted = false);
   }, []);
   const MyVerticallyCenteredModal = props => {
@@ -66,8 +90,7 @@ const App = props => {
         <Modal.Body>
           <EditModal id={openID} />
         </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
+        <Modal.Footer></Modal.Footer>
       </Modal>
     );
   };
@@ -111,6 +134,18 @@ const App = props => {
                   />
                 </InputGroup>
               </Col>
+              <Col md={4} className="mb-3">
+                <InputGroup>
+                  <Form.Select onChange={e => getFilter(e.target.value)}>
+                    <option>Select a Product type</option>
+                    {typeData.map(option => (
+                      <option key={option.prod_type} value={option.prod_type}>
+                        {option.category}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </InputGroup>
+              </Col>
             </Row>
           </div>
         </Card.Header>
@@ -144,6 +179,7 @@ const App = props => {
                     }}>
                     {item.description}
                   </div>
+                  <div>จำนวนสินค้าคงเหลือ {item.stock} ชิ้น</div>
                   <div>
                     <span
                       onClick={() => {

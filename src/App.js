@@ -19,11 +19,8 @@ import AllAdmin from './deploy/AdminList';
 import AllCustomer from './deploy/CustomerList';
 import ProductList from './deploy/ProductList';
 import AuthService from './services/auth.service';
-import Record from './deploy/Record';
-import ToPDF from './deploy/ToPDF';
 import Setting from './deploy/Setting';
-import Tickets from './deploy/Tickets';
-import Ticket from './deploy/Ticket';
+import TransactionList from './deploy/Receipts';
 const App = () => {
   const [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
   let history = useHistory();
@@ -125,18 +122,11 @@ const App = () => {
           path={Routes.Setting.path}
           component={Setting}
         />
-        <RouteWithSidebar exact path={Routes.Record.path} component={Record} />
         <RouteWithSidebar
           exact
-          path={Routes.Tickets.path}
-          component={Tickets}
+          path={Routes.TransactionList.path}
+          component={TransactionList}
         />
-        <RouteWithSidebar
-          exact
-          path={Routes.TicketID.path}
-          component={Ticket}
-        />
-        <Route exact path={Routes.ToPDF.path} component={ToPDF} />
         <Redirect to={Routes.NotFound.path} />
       </Switch>
     </>

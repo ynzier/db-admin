@@ -100,7 +100,10 @@ export default (props = {}) => {
         collapseOnSelect
         variant="dark"
         className="navbar-theme-primary px-4 d-md-none">
-        <Navbar.Brand className="me-lg-5" as={Link} to={Routes.ProductList.path}>
+        <Navbar.Brand
+          className="me-lg-5"
+          as={Link}
+          to={Routes.ProductList.path}>
           <Image src={ReactHero} className="navbar-brand-light" />
         </Navbar.Brand>
         <Navbar.Toggle
@@ -168,9 +171,9 @@ export default (props = {}) => {
                 link={Routes.AllCustomer.path}
               />
               <NavItem
-                title="กล่องข้อความ"
+                title="รายการสั่งซื้อ"
                 icon={faInbox}
-                link={Routes.Tickets.path}
+                link={Routes.TransactionList.path}
               />
               <NavItem
                 title="ตั้งค่าอื่นๆ"
